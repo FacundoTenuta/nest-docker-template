@@ -35,14 +35,32 @@ $ npm install
 ## Running the app
 
 ```bash
-# development
-$ npm run start
+# docker !
+$ docker-compose up -d
 
-# watch mode
-$ npm run start:dev
+# run prisma migration !
+$ docker compose exec app npx prisma migrate dev --name init
 
-# production mode
-$ npm run start:prod
+# run prisma generate
+$ docker compose exec app npx prisma generate
+
+# generate resource (controller, service, model, dto)
+$ nest g res <resource-name>
+
+# generate module
+$ nest g module <module-name>
+
+# generate controller
+$ nest g co <controller-name>
+
+# generate service
+$ nest g s <service-name>
+
+# generate model
+$ nest g mo <model-name>
+
+# generate dto
+$ nest g dto <dto-name>
 ```
 
 ## Test
