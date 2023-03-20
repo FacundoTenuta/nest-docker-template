@@ -12,6 +12,36 @@ services:
     env_file:
     - .env
     command: npm run start:dev
+    networks:
+      - app-network
     ports:
       - 3000:3000
+    depends_on:
+      - mysql
+  
+  mysql:
+    volumes:
+      - nest-mysql-data:/var/lib/mysql
+    image: mysql/mysql-server:8.0
+    #container_name: ${DB_HOST}
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      #MYSQL_TCP_PORT: ${DB_PORT}
+    #command: "--innodb-use-native-aio=0"
+    networks:
+      - app-network
 
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  nest-mysql-data:
+    driver: local
